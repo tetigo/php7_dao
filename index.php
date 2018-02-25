@@ -7,4 +7,21 @@
 	$root = new Usuario();
 	$root->loadByID(8);	
 	echo $root;
+	echo "<hr>";
+	echo "<pre>";
+	print_r( Usuario::getList());
+	echo "</pre>";
+	echo "<hr>";
+	echo "<pre>";
+	print_r( Usuario::search('ser'));
+	echo "</pre>";
+	echo "<hr>";
+	$usu = new Usuario();
+	$usu->login('root',125);
+	echo "<pre>";
+	print_r($usu);
+	echo "</pre>";
+	echo $usu;
+
+
 ?>

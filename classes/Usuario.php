@@ -32,8 +32,8 @@
 
 		public function loadByID($id){
 			$dao = new DAO();
-			$results = $dao->select("select * from tb_usuarios where idusuario = :ID", array(':ID'=>$id));
-			if(count($results)>0){
+			$results = $dao->select("select * from tb_usuarios where idusuario = :ID", array(':ID' => $id));
+			if(count($results) > 0){
 				$linha = $results[0];
 				$this->setIdUsuario($linha['idusuario']);
 				$this->setDesLogin($linha['deslogin']);
@@ -44,12 +44,36 @@
 
 		public function __toString(){
 			return json_encode(array(
-				'idusuario'=>$this->getIdUsuario(),
-				'deslogin'=>$this->getDesLogin(),
-				'dessenha'=>$this->getDesSenha(),
-				'dtcadastro'=>$this->getDTCadastro()->format('d-m-Y H:i:s')
+				'idusuario' => $this->getIdUsuario(),
+				'deslogin' => $this->getDesLogin(),
+				'dessenha' => $this->getDesSenha(),
+				'dtcadastro' => $this->getDTCadastro()->format('d-m-Y H:i:s')
 			));
 		}
-	}
 
+		public static function getList(){
+			$dao = new DAO();
+			return $dao->select("select * from  tb_usuarios;");
+		}
+
+		public static function search($login){
+			$dao = new DAO();
+			return $dao->select("select * from tb_usuarios where deslogin like :SEARCH", array(':SEARCH'=>"%".$login."%"));
+		}
+
+		public function login($login, $senha){
+			$dao = new DAO();
+			$results = $dao->select("select * from tb_usuarios where deslogin = :LOGIN and dessenha = :SENHA", array(':LOGIN' => $login, ':SENHA' => $senha));
+			if(count($results) > 0){
+				$linha = $results[0];
+				$this->setIdUsuario($linha['idusuario']);
+				$this->setDesLogin($linha['deslogin']);
+				$this->setDesSenha($linha['dessenha']);
+				$this->setDTCadastro(new DateTime($linha['dtcadastro']));
+			}
+			else{
+				throw new Exception("Login e/ou Senha Invalidos");
+			}
+		}
+	}
 ?>
