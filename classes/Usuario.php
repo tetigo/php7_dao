@@ -104,5 +104,15 @@
 											  ':SENHA'=>$this->getDesSenha(),
 											  ':ID'=>$this->getIdUsuario()));
 		}
+
+		public function delete(){
+			$dao = new DAO();
+			$dao->query("delete from tb_usuarios where idusuario = :ID", array(":ID"=>$this->getIdUsuario()));
+
+			$this->setIdUsuario(0);
+			$this->setDesLogin("");
+			$this->setDesSenha("");
+			$this->setDTCadastro(new DateTime());
+		}
 	}
 ?>

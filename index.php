@@ -40,9 +40,15 @@
 	
 	echo "<br>"."UPDATE"."<br>";	
 	$usu3 = new Usuario();
-	$usu3->loadByID(14);
+	$usu3->loadByID(17);
 	$usu3->update('login_update', 'pass_update');
 	echo $usu3;
-
+	echo "<hr>";
+	echo "<hr>";
+	echo "<br>"."DELETE"."<br>";	
+	$usu4 = new Usuario();
+	$usu4->loadByID(19);
+	$usu4->delete();
+	echo $usu4;
 
 ?>
