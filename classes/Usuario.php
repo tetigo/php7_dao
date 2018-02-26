@@ -94,5 +94,15 @@
 			}
 		}
 
+		public function update($login, $pass){
+			
+			$this->setDesLogin($login);
+			$this->setDesSenha($pass);
+
+			$dao = new DAO();
+			$dao->query("update tb_usuarios set deslogin = :LOGIN, dessenha = :SENHA where idusuario = :ID", array(':LOGIN'=>$this->getDesLogin(),
+											  ':SENHA'=>$this->getDesSenha(),
+											  ':ID'=>$this->getIdUsuario()));
+		}
 	}
 ?>

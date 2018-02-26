@@ -33,8 +33,16 @@
 	$usu2 = new Usuario('tetigo','tetigo');
 	$usu2->insert();
 	echo "<hr>";
+	echo "<br>"."INSERT"."<br>";	
 	echo $usu2;
 	echo "<hr>";
 	echo "<hr>";
+	
+	echo "<br>"."UPDATE"."<br>";	
+	$usu3 = new Usuario();
+	$usu3->loadByID(14);
+	$usu3->update('login_update', 'pass_update');
+	echo $usu3;
+
 
 ?>
