@@ -35,10 +35,7 @@
 			$results = $dao->select("select * from tb_usuarios where idusuario = :ID", array(':ID' => $id));
 			if(count($results) > 0){
 				$linha = $results[0];
-				$this->setIdUsuario($linha['idusuario']);
-				$this->setDesLogin($linha['deslogin']);
-				$this->setDesSenha($linha['dessenha']);
-				$this->setDTCadastro(new DateTime($linha['dtcadastro']));
+				$this->setData($linha);
 			}
 		}
 
@@ -66,14 +63,36 @@
 			$results = $dao->select("select * from tb_usuarios where deslogin = :LOGIN and dessenha = :SENHA", array(':LOGIN' => $login, ':SENHA' => $senha));
 			if(count($results) > 0){
 				$linha = $results[0];
-				$this->setIdUsuario($linha['idusuario']);
-				$this->setDesLogin($linha['deslogin']);
-				$this->setDesSenha($linha['dessenha']);
-				$this->setDTCadastro(new DateTime($linha['dtcadastro']));
+				$this->setData($linha);
 			}
 			else{
 				throw new Exception("Login e/ou Senha Invalidos");
 			}
 		}
+
+		public function setData($linha){
+			$this->setIdUsuario($linha['idusuario']);
+			$this->setDesLogin($linha['deslogin']);
+			$this->setDesSenha($linha['dessenha']);
+			$this->setDTCadastro(new DateTime($linha['dtcadastro']));			
+		}
+
+		public function __construct($login="", $pass=""){
+			$this->setDesLogin($login);
+			$this->setDesSenha($pass);
+		}
+
+		public function insert(){
+			$dao = new DAO();
+			//$results = $dao->query("");
+			$results = $dao->select("CALL sp_usuarios_insert(:LOGIN, :PASS)", array(
+								':LOGIN'=>$this->getDesLogin(), 
+								':PASS'=>$this->getDesSenha())
+			);
+			if(count($results) > 0){
+				$this->setData($results[0]);
+			}
+		}
+
 	}
 ?>
