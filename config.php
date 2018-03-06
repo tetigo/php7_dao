@@ -2,7 +2,7 @@
 	
 	function teste($class_name){
 
-		$dirName = 'classes'.DIRECTORY_SEPARATOR;
+		$dirName = 'dao/classes'.DIRECTORY_SEPARATOR;
 		$filename = $dirName.$class_name.'.php';
 
 		if(file_exists($filename)){
